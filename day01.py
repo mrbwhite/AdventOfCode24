@@ -1,5 +1,5 @@
 #Read Input File
-file = open("input01.txt", "r")
+file = open("inputs/input01.txt", "r")
 
 difference = 0
 similarity_score = 0

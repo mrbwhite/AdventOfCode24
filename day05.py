@@ -1,10 +1,13 @@
-file = open("input05.txt", "r")
+import time
+start_time = time.time()
+
+file = open("inputs/input05.txt", "r")
 
 rules = []
 updates = []
 mode = 1
-sum_total = 0
-new_sum_total = 0
+valid_sum_total = 0
+invalid_sum_total = 0
 
 #Create a list of rules and updates
 for line in file:
@@ -16,35 +19,28 @@ for line in file:
     elif mode == 2:
         updates.append([int(x) for x in line.split(",")])
 
-def checkValidUpdate(update):
+def check_valid_update(update):
     for i in range(len(update)):
         value = update[i]
-        j = 0
-        while j < len(rules):
-        #for j in range(len(rules)):
+        for j in range(len(rules)):
             if rules[j][0] == value or rules[j][1] == value:
-                #Return false if any rules are violated
+                #If there is a relevant rule check if it's followed
                 try:
                     if update.index(rules[j][0]) > update.index(rules[j][1]):
                         return False
                 except:
                     pass
-            j += 1
-    #Return true if none of this previous rules have been violate
+    #Return true if none of this previous rules have been violated
     return True
 
-def correctInvalidUpdate(update):
-    invalid_rules = []
-    #for i in range(len(update)):
+def correct_invalid_update(update):
     i = 0
     while i < len(update):
         value = update[i]
         i += 1
-        j = 0
-        while j < len(rules):
-        #for j in range(len(rules)):
+        for j in range(len(rules)):
             try:
-                # Set values
+                # For each rule check if it's followed, if a violated rule is found then switch the positions and recheck from the start
                 value_1 = rules[j][0]
                 value_2 = rules[j][1]
                 if value_1 == value or value_2 == value:
@@ -55,22 +51,22 @@ def correctInvalidUpdate(update):
                         #Switch positions
                         update[pos_1] = value_2
                         update[pos_2] = value_1
+                        #Force restart
                         i = 0
                         break
-                        #invalid_rules.append(rules[j])
             except:
                 pass
-            j += 1
 
     return update
 
-#Loop through all of the updates, adding valid updates to a new list
+#Loop through the updates, adding valid updates to a new list
 for i in range(len(updates)):
-    if checkValidUpdate(updates[i]):
-        sum_total += updates[i][len(updates[i]) // 2]
+    if check_valid_update(updates[i]):
+        valid_sum_total += updates[i][len(updates[i]) // 2]
     else:
-        new_update = correctInvalidUpdate(updates[i])
-        new_sum_total += new_update[len(new_update) // 2]
+        new_update = correct_invalid_update(updates[i])
+        invalid_sum_total += new_update[len(new_update) // 2]
 
-print(sum_total)
-print(new_sum_total)
+print(valid_sum_total)
+print(invalid_sum_total)
+print("%s seconds" % (time.time() - start_time))

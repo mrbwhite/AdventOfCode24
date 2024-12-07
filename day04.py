@@ -1,4 +1,4 @@
-file = open("input04.txt", "r")
+file = open("inputs/input04.txt", "r")
 
 #Create a list to store the grid, access with grid_list[row][col]
 grid_list = []

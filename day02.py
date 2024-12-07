@@ -1,5 +1,5 @@
 #Read Input File
-file = open("input02.txt", "r")
+file = open("inputs/input02.txt", "r")
 
 def check_if_valid_digits(diff, increasing):
     # Check each criteria to not be safe, same value, more than 3 and not increasing/decreasing as required
