@@ -10,4 +10,4 @@ def print_elapsed_time():
 file = open("inputs/input_test.txt", "r")
 
 
-print("%s seconds" % (time.time() - start_time))
+print_elapsed_time()
